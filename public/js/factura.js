@@ -19,12 +19,15 @@ function listdatafactura() {
 function leerdata(data) {
     let tbody = document.querySelector('.dtosfactura');
     tbody.innerHTML = '';
-
+     let totalfacturaconiva=0;
+     let totalfacturasin=0;
     data.facturas.forEach(factura => {
      let facturaiva= formatearNumero(factura.valorIva);
      let subtotal=formatearNumero(factura.subtotal);
      let valor_unitario=formatearNumero(factura.valor_unitario);
     let totaconliva=formatearNumero(factura.totaconliva);
+     totalfacturaconiva+=factura.totaconliva;
+     totalfacturasin+=parseInt(factura.subtotal);
         let rowContent = `<tr>
                         <td>${factura.productos}</td>
                         <td>${factura.fecha}</td>
@@ -41,6 +44,20 @@ function leerdata(data) {
         tbody.innerHTML += rowContent;
     });
 
+let rowContentTotal = `<tr>
+                        <td>TotalFActura</td>
+                        <td></td>
+                        <td style="text-align: center;"></td>
+                        <td></td>
+                        <td>${formatearNumero(totalfacturasin)}</td>
+                        <td> </td>
+                        <td></td>
+                        <td>${formatearNumero(totalfacturaconiva)}</td>
+                         <td> </td>
+                      </tr>`;
+
+        // Agrega la fila al tbody
+        tbody.innerHTML += rowContentTotal;
 }
 
 function eliminarP(idF) {
