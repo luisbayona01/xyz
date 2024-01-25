@@ -21,15 +21,19 @@ function leerdata(data) {
     tbody.innerHTML = '';
 
     data.facturas.forEach(factura => {
+     let facturaiva= formatearNumero(factura.valorIva);
+     let subtotal=formatearNumero(factura.subtotal);
+     let valor_unitario=formatearNumero(factura.valor_unitario);
+    let totaconliva=formatearNumero(factura.totaconliva);
         let rowContent = `<tr>
                         <td>${factura.productos}</td>
                         <td>${factura.fecha}</td>
                         <td style="text-align: center;"><input type='number'name='cantidad' value='${factura.cantidad}'onchange="updatecantidad(this,${factura.id},${factura.valor_unitario})" min='1'" ></td>
-                        <td>${factura.valor_unitario}</td>
-                        <td>${factura.subtotal}</td>
+                        <td>${valor_unitario}</td>
+                        <td>${subtotal}</td>
                         <td> <input type='number'name='iva'value='${factura.iva}' onchange="updateiva(this,${factura.id})" min='1' ></td>
-                        <td>${factura.valorIva}</td>
-                        <td>${factura.totaconliva}</td>
+                        <td>${facturaiva}</td>
+                        <td>${totaconliva}</td>
                          <td><button type='button' class='btn btn-danger' onClick='eliminarP(${factura.id})'>Eliminar producto</button> </td>
                       </tr>`;
 
@@ -93,6 +97,10 @@ function ajaxdta(url, formdata) {
             console.error('Error en la solicitud POST:', error);
         });
 
+}
+
+function formatearNumero(numero) {
+    return numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 $(document).ready(function () {
